@@ -322,7 +322,7 @@
         </div>
         <div class="sidebar-footer">
             <a href="https://github.com/ibraheem9/laravel-module-assets" target="_blank">&#x2B50; GitHub Repository</a><br>
-            <span style="margin-top:4px;display:block;">Laravel 10 &middot; PHP 8.1+</span>
+            <span style="margin-top:4px;display:block;">Laravel 12 &middot; PHP 8.2+</span>
         </div>
     </aside>
 
@@ -340,9 +340,9 @@
             </div>
             <div class="hero-stats">
                 <div class="hero-stat"><div class="value">1</div><div class="label">Command</div></div>
-                <div class="hero-stat"><div class="value">13</div><div class="label">Tests Passing</div></div>
+                <div class="hero-stat"><div class="value">29</div><div class="label">Tests Passing</div></div>
                 <div class="hero-stat"><div class="value">0</div><div class="label">Dependencies</div></div>
-                <div class="hero-stat"><div class="value">&infin;</div><div class="label">Modules Supported</div></div>
+                <div class="hero-stat"><div class="value">12</div><div class="label">Laravel Version</div></div>
             </div>
         </section>
 
@@ -908,7 +908,7 @@
         <section class="section" id="tests">
             <div class="section-header">
                 <h2><span class="section-number">11</span>Testing</h2>
-                <p>15 PHPUnit feature tests covering all scenarios. All tests pass.</p>
+                <p>29 PHPUnit feature tests covering all scenarios. All tests pass.</p>
             </div>
             <div class="terminal" style="margin-bottom:20px">
                 <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>php artisan test</span></div>

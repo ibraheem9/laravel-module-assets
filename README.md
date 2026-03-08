@@ -4,9 +4,9 @@
 
 **A zero-dependency Artisan command that solves the modular asset problem in Laravel.**
 
-[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![Tests](https://img.shields.io/badge/Tests-15_Passing-3FB950?style=for-the-badge&logo=testing-library&logoColor=white)](#-testing)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Tests](https://img.shields.io/badge/Tests-29_Passing-3FB950?style=for-the-badge&logo=testing-library&logoColor=white)](#-testing)
 [![License](https://img.shields.io/badge/License-MIT-007EC6?style=for-the-badge)](#-license)
 
 Keep your JavaScript and CSS files **inside each module** and make them instantly web-accessible — no build tools, no copying, no config.
@@ -192,7 +192,7 @@ How this solution compares to other common approaches for managing assets in mod
 
 ## ✅ Testing
 
-15 PHPUnit feature tests covering all scenarios. All tests pass.
+29 PHPUnit feature tests covering all scenarios. All tests pass.
 
 ```bash
 $ php artisan test tests/Feature/CreateModuleSymlinksTest.php
@@ -212,8 +212,8 @@ $ php artisan test tests/Feature/CreateModuleSymlinksTest.php
   ✓ module demo page loads                               0.02s
   ✓ individual module pages load                         0.02s
 
-  Tests:    13 passed (55 assertions)
-  Duration: 0.35s
+  Tests:    29 passed (80 assertions)
+  Duration: 0.54s
 ```
 
 ---
