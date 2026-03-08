@@ -56,11 +56,11 @@ The command scans your `Modules/` directory and creates a symbolic link for each
 
 ```mermaid
 graph LR
-    A[Modules/Dashboard/Assets/js/] -->|php artisan modules:symlink| B(public/modules/dashboard/js/)
-    B -->|Browser URL| C[/modules/dashboard/js/dashboard.js]
+    A["Modules/Dashboard/Assets/js/"] -->|"php artisan modules:symlink"| B("public/modules/dashboard/js/")
+    B -->|"Browser URL"| C["/modules/dashboard/js/dashboard.js"]
     style A fill:#161b22,stroke:#30363d,color:#e6edf3
-    style B fill:#rgba(240,83,64,.08),stroke:#f05340,color:#ff7b6b
-    style C fill:#rgba(240,83,64,.08),stroke:#f05340,color:#ff7b6b
+    style B fill:#2d1a17,stroke:#f05340,color:#ff7b6b
+    style C fill:#2d1a17,stroke:#f05340,color:#ff7b6b
 ```
 
 ---
