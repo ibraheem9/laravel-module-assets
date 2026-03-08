@@ -1,133 +1,996 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel Module Assets — Interactive Developer Manual</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg:        #0d1117;
+            --bg2:       #161b22;
+            --bg3:       #21262d;
+            --border:    #30363d;
+            --text:      #e6edf3;
+            --muted:     #8b949e;
+            --accent:    #f05340;
+            --accent2:   #ff7b6b;
+            --green:     #3fb950;
+            --blue:      #58a6ff;
+            --yellow:    #d29922;
+            --purple:    #bc8cff;
+            --radius:    8px;
+            --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; }
 
-        <title>Laravel</title>
+        /* Layout */
+        .layout { display: flex; min-height: 100vh; }
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        /* Sidebar */
+        .sidebar { width: 255px; flex-shrink: 0; background: var(--bg2); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; display: flex; flex-direction: column; }
+        .sidebar-logo { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); }
+        .logo-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-bottom: 7px; }
+        .sidebar-logo h1 { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+        .sidebar-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+        .sidebar-nav { padding: 10px 0; flex: 1; }
+        .nav-section-title { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 10px 18px 3px; }
+        .nav-link { display: flex; align-items: center; gap: 7px; padding: 6px 18px; color: var(--muted); text-decoration: none; font-size: 13px; transition: all .15s; border-left: 2px solid transparent; }
+        .nav-link:hover { color: var(--text); background: var(--bg3); }
+        .nav-link.active { color: var(--accent2); border-left-color: var(--accent); background: rgba(240,83,64,.08); }
+        .nav-icon { font-size: 13px; width: 16px; text-align: center; }
+        .sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+        .sidebar-footer a { color: var(--blue); text-decoration: none; }
 
-        <!-- Styles -->
-        <style>
-            /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, sans-serif;font-feature-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.relative{position:relative}.mx-auto{margin-left:auto;margin-right:auto}.mx-6{margin-left:1.5rem;margin-right:1.5rem}.ml-4{margin-left:1rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.-mt-px{margin-top:-1px}.mr-1{margin-right:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.h-16{height:4rem}.h-7{height:1.75rem}.h-6{height:1.5rem}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.w-auto{width:auto}.w-16{width:4rem}.w-7{width:1.75rem}.w-6{width:1.5rem}.w-5{width:1.25rem}.max-w-7xl{max-width:80rem}.shrink-0{flex-shrink:0}.scale-100{--tw-scale-x:1;--tw-scale-y:1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-center{align-items:center}.justify-center{justify-content:center}.gap-6{gap:1.5rem}.gap-4{gap:1rem}.self-center{align-self:center}.rounded-lg{border-radius:0.5rem}.rounded-full{border-radius:9999px}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity))}.bg-dots-darker{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E")}.from-gray-700\/50{--tw-gradient-from:rgb(55 65 81 / 0.5);--tw-gradient-to:rgb(55 65 81 / 0);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0);--tw-gradient-stops:var(--tw-gradient-from), transparent, var(--tw-gradient-to)}.bg-center{background-position:center}.stroke-red-500{stroke:#ef4444}.stroke-gray-400{stroke:#9ca3af}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-gray-500\/20{--tw-shadow-color:rgb(107 114 128 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-red-500 *::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-red-500::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity))}.focus\:rounded-sm:focus{border-radius:0.125rem}.focus\:outline:focus{outline-style:solid}.focus\:outline-2:focus{outline-width:2px}.focus\:outline-red-500:focus{outline-color:#ef4444}.group:hover .group-hover\:stroke-gray-600{stroke:#4b5563}.z-10{z-index: 10}@media (prefers-reduced-motion: no-preference){.motion-safe\:hover\:scale-\[1\.01\]:hover{--tw-scale-x:1.01;--tw-scale-y:1.01;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}}@media (prefers-color-scheme: dark){.dark\:bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity))}.dark\:bg-gray-800\/50{background-color:rgb(31 41 55 / 0.5)}.dark\:bg-red-800\/20{background-color:rgb(153 27 27 / 0.2)}.dark\:bg-dots-lighter{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E")}.dark\:bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.dark\:stroke-gray-600{stroke:#4b5563}.dark\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity))}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.dark\:ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.dark\:ring-inset{--tw-ring-inset:inset}.dark\:ring-white\/5{--tw-ring-color:rgb(255 255 255 / 0.05)}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.group:hover .dark\:group-hover\:stroke-gray-400{stroke:#9ca3af}}@media (min-width: 640px){.sm\:fixed{position:fixed}.sm\:top-0{top:0px}.sm\:right-0{right:0px}.sm\:ml-0{margin-left:0px}.sm\:flex{display:flex}.sm\:items-center{align-items:center}.sm\:justify-center{justify-content:center}.sm\:justify-between{justify-content:space-between}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:gap-8{gap:2rem}.lg\:p-8{padding:2rem}}
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+        /* Main */
+        .main { margin-left: 255px; flex: 1; min-width: 0; }
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
-                    @endauth
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%); border-bottom: 1px solid var(--border); padding: 60px 48px 52px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(240,83,64,.12) 0%, transparent 70%); pointer-events: none; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(240,83,64,.15); border: 1px solid rgba(240,83,64,.3); color: var(--accent2); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 18px; }
+        .hero h1 { font-size: 40px; font-weight: 800; line-height: 1.15; margin-bottom: 14px; background: linear-gradient(135deg, #fff 0%, #c9d1d9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero h1 span { -webkit-text-fill-color: var(--accent); }
+        .hero p { font-size: 16px; color: var(--muted); max-width: 600px; margin-bottom: 28px; line-height: 1.7; }
+        .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all .2s; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { background: var(--bg3); border-color: var(--muted); }
+        .hero-stats { display: flex; gap: 28px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); }
+        .hero-stat .value { font-size: 26px; font-weight: 800; color: var(--accent); }
+        .hero-stat .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+        /* Sections */
+        .section { padding: 52px 48px; border-bottom: 1px solid var(--border); }
+        .section:last-child { border-bottom: none; }
+        .section-header { margin-bottom: 28px; }
+        .section-number { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; margin-right: 9px; }
+        .section-header h2 { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+        .section-header p { color: var(--muted); font-size: 14px; max-width: 620px; }
+
+        /* Problem / Solution */
+        .problem-solution { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+        .ps-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+        .ps-card.problem { border-top: 3px solid #da3633; }
+        .ps-card.solution { border-top: 3px solid var(--green); }
+        .ps-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+        .ps-card.problem h3 { color: #f85149; }
+        .ps-card.solution h3 { color: var(--green); }
+        .ps-card ul { list-style: none; }
+        .ps-card ul li { font-size: 13px; color: var(--muted); padding: 3px 0; display: flex; align-items: flex-start; gap: 7px; }
+        .ps-card ul li::before { flex-shrink: 0; margin-top: 2px; }
+        .ps-card.problem ul li::before { content: '✗'; color: #f85149; }
+        .ps-card.solution ul li::before { content: '✓'; color: var(--green); }
+
+        /* Flow diagram */
+        .flow-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: center; margin: 20px 0; }
+        .flow-row { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+        .flow-box { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 18px; font-size: 12px; font-family: var(--mono); min-width: 150px; text-align: center; }
+        .flow-box .flow-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
+        .flow-box .flow-path { color: var(--blue); font-weight: 600; }
+        .flow-box.highlight { border-color: var(--accent); background: rgba(240,83,64,.08); }
+        .flow-box.highlight .flow-path { color: var(--accent2); }
+        .flow-arrow { font-size: 18px; color: var(--muted); padding: 0 10px; }
+        .flow-command { background: rgba(240,83,64,.1); border: 1px dashed var(--accent); border-radius: var(--radius); padding: 9px 18px; font-family: var(--mono); font-size: 13px; color: var(--accent2); margin: 18px auto; display: inline-block; }
+
+        /* Code blocks */
+        .code-wrapper { position: relative; margin: 14px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+        .code-header { display: flex; align-items: center; justify-content: space-between; background: var(--bg3); padding: 7px 14px; border-bottom: 1px solid var(--border); }
+        .file-name { font-size: 11px; color: var(--muted); font-family: var(--mono); display: flex; align-items: center; gap: 5px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+        .copy-btn { background: var(--bg2); border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 3px 9px; border-radius: 4px; cursor: pointer; transition: all .2s; font-family: var(--mono); }
+        .copy-btn:hover { background: var(--bg3); color: var(--text); }
+        .copy-btn.copied { color: var(--green); border-color: var(--green); }
+        pre { background: #0d1117; padding: 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7; margin: 0; }
+        .ic { background: var(--bg3); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; font-size: 12px; font-family: var(--mono); color: var(--accent2); }
+
+        /* Syntax tokens */
+        .t-kw  { color: #ff7b72; } .t-fn  { color: #d2a8ff; } .t-str { color: #a5d6ff; }
+        .t-cm  { color: #8b949e; font-style: italic; } .t-cl  { color: #ffa657; }
+        .t-ns  { color: #79c0ff; } .t-num { color: #79c0ff; }
+
+        /* Steps */
+        .steps { display: flex; flex-direction: column; gap: 0; }
+        .step { display: flex; gap: 22px; position: relative; }
+        .step:not(:last-child)::after { content: ''; position: absolute; left: 18px; top: 44px; bottom: 0; width: 2px; background: var(--border); }
+        .step-num { flex-shrink: 0; width: 38px; height: 38px; background: var(--bg3); border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--accent); position: relative; z-index: 1; }
+        .step-content { flex: 1; padding-bottom: 28px; }
+        .step-content h3 { font-size: 15px; font-weight: 700; margin-bottom: 7px; padding-top: 7px; }
+        .step-content p { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+
+        /* Tree */
+        .tree { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; font-family: var(--mono); font-size: 13px; line-height: 2; }
+        .td { color: var(--blue); font-weight: 600; } .tf { color: var(--text); } .tn { color: var(--muted); font-style: italic; } .tg { color: var(--green); } .tc { color: var(--accent2); }
+
+        /* Compare table */
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .compare-table th { background: var(--bg3); padding: 9px 14px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); border-bottom: 1px solid var(--border); }
+        .compare-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--muted); }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table tr:hover td { background: var(--bg2); }
+        .good { color: var(--green); font-weight: 600; } .bad { color: #f85149; } .ok { color: var(--yellow); }
+        .row-hl td { background: rgba(240,83,64,.06); }
+        .row-hl td:first-child { border-left: 2px solid var(--accent); }
+
+        /* Demo tabs */
+        .demo-area { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .demo-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--bg3); overflow-x: auto; }
+        .demo-tab { padding: 9px 18px; font-size: 13px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; user-select: none; white-space: nowrap; }
+        .demo-tab:hover { color: var(--text); }
+        .demo-tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
+        .demo-panel { display: none; padding: 22px; }
+        .demo-panel.active { display: block; }
+
+        /* Terminal */
+        .terminal { background: #010409; border-radius: var(--radius); overflow: hidden; font-family: var(--mono); font-size: 13px; }
+        .terminal-bar { background: #1c2128; padding: 7px 14px; display: flex; align-items: center; gap: 7px; }
+        .terminal-bar span { font-size: 11px; color: var(--muted); }
+        .terminal-body { padding: 14px 18px; line-height: 2; }
+        .tp { color: var(--green); } .tc2 { color: var(--text); } .to { color: var(--muted); }
+        .tok { color: var(--green); } .twarn { color: var(--yellow); } .ti { color: var(--blue); }
+
+        /* FAQ */
+        .faq-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 7px; overflow: hidden; }
+        .faq-q { padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; background: var(--bg2); user-select: none; transition: background .2s; }
+        .faq-q:hover { background: var(--bg3); }
+        .faq-icon { color: var(--accent); font-size: 18px; transition: transform .3s; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-a { display: none; padding: 14px 18px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); line-height: 1.8; }
+        .faq-item.open .faq-a { display: block; }
+
+        /* Alerts */
+        .alert { display: flex; gap: 10px; padding: 12px 16px; border-radius: var(--radius); margin: 14px 0; font-size: 13px; line-height: 1.7; }
+        .alert-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+        .alert.tip    { background: rgba(56,139,253,.1);  border: 1px solid rgba(56,139,253,.3);  color: #79c0ff; }
+        .alert.warn   { background: rgba(210,153,34,.1);  border: 1px solid rgba(210,153,34,.3);  color: #e3b341; }
+        .alert.success{ background: rgba(63,185,80,.1);   border: 1px solid rgba(63,185,80,.3);   color: #56d364; }
+
+        /* Module cards */
+        .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .module-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; transition: border-color .2s; }
+        .module-card:hover { border-color: var(--accent); }
+        .module-card .mi { font-size: 26px; margin-bottom: 10px; }
+        .module-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+        .module-card p  { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+        .module-files { display: flex; flex-direction: column; gap: 3px; }
+        .module-file { display: flex; align-items: center; gap: 5px; font-size: 11px; font-family: var(--mono); color: var(--muted); padding: 3px 7px; background: var(--bg3); border-radius: 4px; }
+        .module-file .ext { color: var(--accent2); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform .3s; }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .hero { padding: 40px 20px; }
+            .section { padding: 36px 20px; }
+            .problem-solution, .module-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 26px; }
+            .hero-stats { gap: 18px; }
+            .hamburger { display: flex; }
+        }
+        .hamburger { display: none; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 7px 9px; cursor: pointer; flex-direction: column; gap: 4px; }
+        .hamburger span { display: block; width: 18px; height: 2px; background: var(--text); border-radius: 2px; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
+        .overlay.show { display: block; }
+    </style>
+</head>
+<body>
+
+<button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-badge">⚡ Laravel</div>
+            <h1>Module Assets</h1>
+            <p>Interactive Developer Manual</p>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Getting Started</div>
+            <a href="#overview"     class="nav-link active"><span class="nav-icon">🏠</span> Overview</a>
+            <a href="#problem"      class="nav-link"><span class="nav-icon">⚠️</span> The Problem</a>
+            <a href="#how-it-works" class="nav-link"><span class="nav-icon">⚙️</span> How It Works</a>
+            <div class="nav-section-title">Installation</div>
+            <a href="#installation" class="nav-link"><span class="nav-icon">📦</span> Installation</a>
+            <a href="#structure"    class="nav-link"><span class="nav-icon">📁</span> Module Structure</a>
+            <a href="#command"      class="nav-link"><span class="nav-icon">🖥️</span> The Command</a>
+            <div class="nav-section-title">Usage</div>
+            <a href="#helper"       class="nav-link"><span class="nav-icon">🛠️</span> Asset Helper</a>
+            <a href="#views"        class="nav-link"><span class="nav-icon">🎨</span> Using in Views</a>
+            <a href="#demo-modules" class="nav-link"><span class="nav-icon">🧩</span> Demo Modules</a>
+            <div class="nav-section-title">Reference</div>
+            <a href="#comparison"   class="nav-link"><span class="nav-icon">📊</span> Comparison</a>
+            <a href="#tests"        class="nav-link"><span class="nav-icon">✅</span> Tests</a>
+            <a href="#deployment"   class="nav-link"><span class="nav-icon">🚀</span> Deployment</a>
+            <a href="#faq"          class="nav-link"><span class="nav-icon">❓</span> FAQ</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="https://github.com/ibraheem9/laravel-module-assets" target="_blank">⭐ GitHub Repository</a><br>
+            <span style="margin-top:4px;display:block;">Laravel 10 · PHP 8.1+</span>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HERO -->
+        <section class="hero" id="overview">
+            <div class="hero-badge">🔗 Artisan Command</div>
+            <h1>Laravel <span>Module</span> Assets</h1>
+            <p>A zero-dependency Artisan command that solves the modular asset problem in Laravel. Keep your JavaScript and CSS files <strong style="color:var(--text)">inside each module</strong> and make them instantly web-accessible — no build tools, no copying, no config.</p>
+            <div class="hero-actions">
+                <a href="#installation" class="btn btn-primary">🚀 Get Started</a>
+                <a href="https://github.com/ibraheem9/laravel-module-assets" target="_blank" class="btn btn-outline">⭐ GitHub</a>
+                <a href="{{ route('modules.index') }}" class="btn btn-outline">🧩 Live Demo</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="value">1</div><div class="label">Command</div></div>
+                <div class="hero-stat"><div class="value">13</div><div class="label">Tests Passing</div></div>
+                <div class="hero-stat"><div class="value">0</div><div class="label">Dependencies</div></div>
+                <div class="hero-stat"><div class="value">∞</div><div class="label">Modules Supported</div></div>
+            </div>
+        </section>
+
+        <!-- THE PROBLEM -->
+        <section class="section" id="problem">
+            <div class="section-header">
+                <h2><span class="section-number">1</span>The Problem</h2>
+                <p>In modular Laravel apps, assets must live in <span class="ic">public/</span> to be served — but this breaks module independence.</p>
+            </div>
+            <div class="problem-solution">
+                <div class="ps-card problem">
+                    <h3>❌ Without This Solution</h3>
+                    <ul>
+                        <li>Assets must be manually copied to <code>public/</code></li>
+                        <li>Modules are not truly self-contained</li>
+                        <li>Easy to forget copying on deploy</li>
+                        <li>Stale files accumulate in <code>public/</code></li>
+                        <li>Removing a module leaves orphaned files</li>
+                    </ul>
                 </div>
-            @endif
+                <div class="ps-card solution">
+                    <h3>✅ With This Solution</h3>
+                    <ul>
+                        <li>Assets stay inside their module directory</li>
+                        <li>One command creates all symlinks instantly</li>
+                        <li>Edit files — changes reflect immediately</li>
+                        <li>Delete a module — symlink breaks cleanly</li>
+                        <li>No build step required for plain JS/CSS</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="alert tip">
+                <span class="alert-icon">💡</span>
+                <div>A <strong>symbolic link</strong> is a file system pointer. The web server sees files in <span class="ic">public/modules/</span> — but they physically live inside each module. Editing the source file is instantly reflected in the browser.</div>
+            </div>
+        </section>
 
-            <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="flex justify-center">
-                    <svg viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
-                        <path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="#FF2D20"/>
-                    </svg>
+        <!-- HOW IT WORKS -->
+        <section class="section" id="how-it-works">
+            <div class="section-header">
+                <h2><span class="section-number">2</span>How It Works</h2>
+                <p>The command scans your <span class="ic">Modules/</span> directory and creates a symbolic link for each asset subdirectory into <span class="ic">public/modules/</span>.</p>
+            </div>
+            <div class="flow-diagram">
+                <div style="font-size:11px;color:var(--muted);margin-bottom:18px;text-transform:uppercase;letter-spacing:.08em;">Before running the command</div>
+                <div class="flow-row">
+                    <div class="flow-box"><div class="flow-label">Module Source</div><div class="flow-path">Modules/Dashboard/Assets/js/</div></div>
+                    <div class="flow-arrow">✗</div>
+                    <div class="flow-box"><div class="flow-label">Public (not accessible)</div><div class="flow-path" style="color:var(--muted)">public/modules/ (empty)</div></div>
+                </div>
+                <div class="flow-command">$ php artisan modules:symlink</div>
+                <div style="font-size:11px;color:var(--muted);margin-bottom:18px;text-transform:uppercase;letter-spacing:.08em;">After running the command</div>
+                <div class="flow-row">
+                    <div class="flow-box"><div class="flow-label">Module Source</div><div class="flow-path">Modules/Dashboard/Assets/js/</div></div>
+                    <div class="flow-arrow">🔗</div>
+                    <div class="flow-box highlight"><div class="flow-label">Symlink (web-accessible)</div><div class="flow-path">public/modules/dashboard/js/</div></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box highlight"><div class="flow-label">Browser URL</div><div class="flow-path">/modules/dashboard/js/dashboard.js</div></div>
+                </div>
+            </div>
+            <div class="alert success">
+                <span class="alert-icon">✅</span>
+                <div>The file <strong>physically lives</strong> in <span class="ic">Modules/Dashboard/Assets/js/dashboard.js</span> but is accessible at <span class="ic">https://yourapp.com/modules/dashboard/js/dashboard.js</span>.</div>
+            </div>
+        </section>
+
+        <!-- INSTALLATION -->
+        <section class="section" id="installation">
+            <div class="section-header">
+                <h2><span class="section-number">3</span>Installation</h2>
+                <p>Follow these steps to add the module asset system to any existing Laravel project.</p>
+            </div>
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h3>Copy the Command File</h3>
+                        <p>Place <span class="ic">CreateModuleSymlinks.php</span> into <span class="ic">app/Console/Commands/</span>.</p>
+                        <div class="code-wrapper">
+                            <div class="code-header">
+                                <div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> app/Console/Commands/CreateModuleSymlinks.php</div>
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <pre><code><span class="t-kw">namespace</span> <span class="t-ns">App\Console\Commands</span>;
+
+<span class="t-kw">use</span> <span class="t-cl">Illuminate\Console\Command</span>;
+<span class="t-kw">use</span> <span class="t-cl">Illuminate\Support\Facades\File</span>;
+<span class="t-kw">use</span> <span class="t-cl">Illuminate\Support\Str</span>;
+
+<span class="t-kw">class</span> <span class="t-cl">CreateModuleSymlinks</span> <span class="t-kw">extends</span> <span class="t-cl">Command</span>
+{
+    <span class="t-kw">protected</span> <span class="t-ns">$signature</span>   = <span class="t-str">'modules:symlink'</span>;
+    <span class="t-kw">protected</span> <span class="t-ns">$description</span> = <span class="t-str">'Create symlinks for module assets'</span>;
+
+    <span class="t-kw">public function</span> <span class="t-fn">handle</span>()
+    {
+        <span class="t-ns">$modules</span> = <span class="t-ns">$this</span>-&gt;<span class="t-fn">getModuleNames</span>();
+        <span class="t-kw">foreach</span> (<span class="t-ns">$modules</span> <span class="t-kw">as</span> <span class="t-ns">$module</span>) {
+            <span class="t-ns">$this</span>-&gt;<span class="t-fn">createSymlinkForModule</span>(<span class="t-ns">$module</span>);
+        }
+        <span class="t-ns">$this</span>-&gt;<span class="t-fn">info</span>(<span class="t-str">'✓ Module symlinks created successfully!'</span>);
+    }
+
+    <span class="t-kw">protected function</span> <span class="t-fn">getModuleNames</span>()
+    {
+        <span class="t-ns">$dir</span> = <span class="t-fn">base_path</span>(<span class="t-str">'Modules'</span>);
+        <span class="t-kw">return</span> <span class="t-fn">array_filter</span>(<span class="t-fn">scandir</span>(<span class="t-ns">$dir</span>), <span class="t-kw">fn</span>(<span class="t-ns">$i</span>) =&gt;
+            <span class="t-fn">is_dir</span>(<span class="t-ns">$dir</span>.<span class="t-str">'/'</span>.<span class="t-ns">$i</span>) &amp;&amp; <span class="t-ns">$i</span> !== <span class="t-str">'.'</span> &amp;&amp; <span class="t-ns">$i</span> !== <span class="t-str">'..'</span>
+        );
+    }
+
+    <span class="t-kw">protected function</span> <span class="t-fn">createSymlinkForModule</span>(<span class="t-ns">$module</span>)
+    {
+        <span class="t-ns">$source</span> = <span class="t-fn">base_path</span>(<span class="t-str">"Modules/<span class="t-ns">$module</span>/Assets"</span>);
+        <span class="t-ns">$dest</span>   = <span class="t-fn">public_path</span>(<span class="t-str">"modules/"</span>.<span class="t-cl">Str</span>::<span class="t-fn">snake</span>(<span class="t-ns">$module</span>));
+
+        <span class="t-kw">if</span> (!<span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$source</span>)) {
+            <span class="t-ns">$this</span>-&gt;<span class="t-fn">error</span>(<span class="t-str">"Source not found: <span class="t-ns">$source</span>"</span>); <span class="t-kw">return</span>;
+        }
+        <span class="t-kw">if</span> (!<span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$dest</span>)) <span class="t-cl">File</span>::<span class="t-fn">makeDirectory</span>(<span class="t-ns">$dest</span>, <span class="t-num">0755</span>, <span class="t-kw">true</span>);
+
+        <span class="t-kw">foreach</span> (<span class="t-cl">File</span>::<span class="t-fn">directories</span>(<span class="t-ns">$source</span>) <span class="t-kw">as</span> <span class="t-ns">$dir</span>) {
+            <span class="t-ns">$link</span> = <span class="t-ns">$dest</span>.<span class="t-str">'/'</span>.<span class="t-fn">basename</span>(<span class="t-ns">$dir</span>);
+            <span class="t-kw">if</span> (<span class="t-fn">is_link</span>(<span class="t-ns">$link</span>)) <span class="t-fn">unlink</span>(<span class="t-ns">$link</span>);
+            <span class="t-cl">File</span>::<span class="t-fn">link</span>(<span class="t-ns">$dir</span>, <span class="t-ns">$link</span>);
+            <span class="t-ns">$this</span>-&gt;<span class="t-fn">info</span>(<span class="t-str">"  ✓ Symlink: <span class="t-ns">$link</span>"</span>);
+        }
+    }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                        <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Documentation</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <a href="https://laracasts.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <a href="https://laravel-news.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Forge</a>, <a href="https://vapor.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Vapor</a>, <a href="https://nova.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Nova</a>, and <a href="https://envoyer.io" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Telescope</a>, and more.
-                                </p>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3>Register the Modules Namespace</h3>
+                        <p>Add <span class="ic">Modules\\</span> to your <span class="ic">composer.json</span> autoload, then run <span class="ic">composer dump-autoload</span>.</p>
+                        <div class="code-wrapper">
+                            <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> composer.json</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                            <pre><code><span class="t-str">"autoload"</span>: {
+    <span class="t-str">"psr-4"</span>: {
+        <span class="t-str">"App\\"</span>:      <span class="t-str">"app/"</span>,
+        <span class="t-str">"Modules\\"</span>: <span class="t-str">"Modules/"</span>   <span class="t-cm">// ← Add this</span>
+    }
+}</code></pre>
+                        </div>
+                        <div class="terminal" style="margin-top:10px">
+                            <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>Terminal</span></div>
+                            <div class="terminal-body">
+                                <div><span class="tp">$</span> <span class="tc2">composer dump-autoload</span></div>
+                                <div class="tok">Generated optimized autoload files containing 6279 classes</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm sm:text-left">
-                        &nbsp;
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3>Create Your Module Structure</h3>
+                        <p>Create the <span class="ic">Modules/</span> directory at the project root with your module's <span class="ic">Assets/</span> subdirectories.</p>
+                        <div class="terminal">
+                            <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>Terminal</span></div>
+                            <div class="terminal-body">
+                                <div><span class="tp">$</span> <span class="tc2">mkdir -p Modules/Dashboard/Assets/{js,css,images}</span></div>
+                                <div><span class="tp">$</span> <span class="tc2">mkdir -p Modules/Analytics/Assets/{js,css}</span></div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h3>Run the Command</h3>
+                        <p>Execute the Artisan command. It scans all modules and creates the symlinks automatically.</p>
+                        <div class="terminal">
+                            <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>Terminal</span></div>
+                            <div class="terminal-body">
+                                <div><span class="tp">$</span> <span class="tc2">php artisan modules:symlink</span></div>
+                                <div class="ti">Creating symlinks for 3 module(s)...</div>
+                                <div class="tok">  ✓ [Dashboard] js  → public/modules/dashboard/js</div>
+                                <div class="tok">  ✓ [Dashboard] css → public/modules/dashboard/css</div>
+                                <div class="tok">  ✓ [Analytics] js  → public/modules/analytics/js</div>
+                                <div class="tok">  ✓ [Analytics] css → public/modules/analytics/css</div>
+                                <div class="tok">✓ Module symlinks created successfully!</div>
+                            </div>
+                        </div>
+                        <div class="alert success" style="margin-top:10px">
+                            <span class="alert-icon">✅</span>
+                            <div>Done! Assets are now accessible at <span class="ic">/modules/{module_name}/{type}/{file}</span>.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE STRUCTURE -->
+        <section class="section" id="structure">
+            <div class="section-header">
+                <h2><span class="section-number">4</span>Module Structure</h2>
+                <p>The <span class="ic">Assets/</span> directory is the only required convention. Any subdirectory inside it becomes a symlink.</p>
+            </div>
+            <div class="demo-area">
+                <div class="demo-tabs">
+                    <div class="demo-tab active" onclick="switchTab(this,'tab-full')">Full Module</div>
+                    <div class="demo-tab" onclick="switchTab(this,'tab-minimal')">Minimal</div>
+                    <div class="demo-tab" onclick="switchTab(this,'tab-result')">Result in public/</div>
+                </div>
+                <div class="demo-panel active" id="tab-full">
+                    <div class="tree">
+<span class="td">Modules/</span>
+└── <span class="td">Dashboard/</span>
+    ├── <span class="td">Assets/</span>                  <span class="tn">← web-accessible assets</span>
+    │   ├── <span class="td">js/</span>
+    │   │   └── <span class="tf">dashboard.js</span>
+    │   ├── <span class="td">css/</span>
+    │   │   └── <span class="tf">dashboard.css</span>
+    │   └── <span class="td">images/</span>
+    │       └── <span class="tf">logo.png</span>
+    ├── <span class="td">src/</span>                     <span class="tn">← PHP source code</span>
+    │   ├── <span class="td">Controllers/</span>
+    │   ├── <span class="td">Models/</span>
+    │   ├── <span class="td">Routes/web.php</span>
+    │   └── <span class="td">Views/</span>
+    └── <span class="tf">module.json</span>              <span class="tn">← module metadata</span>
+                    </div>
+                </div>
+                <div class="demo-panel" id="tab-minimal">
+                    <div class="tree">
+<span class="td">Modules/</span>
+└── <span class="td">Dashboard/</span>
+    └── <span class="td">Assets/</span>          <span class="tn">← only this is required</span>
+        ├── <span class="td">js/</span>
+        │   └── <span class="tf">dashboard.js</span>
+        └── <span class="td">css/</span>
+            └── <span class="tf">dashboard.css</span>
+                    </div>
+                    <div class="alert tip" style="margin-top:14px">
+                        <span class="alert-icon">💡</span>
+                        <div>You can add any subdirectories — <span class="ic">js/</span>, <span class="ic">css/</span>, <span class="ic">images/</span>, <span class="ic">fonts/</span>. Each one becomes its own symlink.</div>
+                    </div>
+                </div>
+                <div class="demo-panel" id="tab-result">
+                    <div class="tree">
+<span class="td">public/</span>
+└── <span class="td">modules/</span>
+    └── <span class="td">dashboard/</span>           <span class="tn">← created by command</span>
+        ├── <span class="tc">js/</span>      <span class="tn">→ symlink to Modules/Dashboard/Assets/js/</span>
+        ├── <span class="tc">css/</span>     <span class="tn">→ symlink to Modules/Dashboard/Assets/css/</span>
+        └── <span class="tc">images/</span>  <span class="tn">→ symlink to Modules/Dashboard/Assets/images/</span>
+                    </div>
+                    <div class="alert warn" style="margin-top:14px">
+                        <span class="alert-icon">⚠️</span>
+                        <div>Add <span class="ic">/public/modules</span> to your <span class="ic">.gitignore</span>. Symlinks should not be committed — they are regenerated on each deploy.</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </body>
+        </section>
+
+        <!-- THE COMMAND DEEP DIVE -->
+        <section class="section" id="command">
+            <div class="section-header">
+                <h2><span class="section-number">5</span>Command Deep Dive</h2>
+                <p>Understanding what each method does inside <span class="ic">CreateModuleSymlinks</span>.</p>
+            </div>
+            <div class="demo-area">
+                <div class="demo-tabs">
+                    <div class="demo-tab active" onclick="switchTab(this,'cmd-handle')">handle()</div>
+                    <div class="demo-tab" onclick="switchTab(this,'cmd-get')">getModuleNames()</div>
+                    <div class="demo-tab" onclick="switchTab(this,'cmd-create')">createSymlinkForModule()</div>
+                    <div class="demo-tab" onclick="switchTab(this,'cmd-assets')">createSymlinksForAssets()</div>
+                </div>
+                <div class="demo-panel active" id="cmd-handle">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Entry point. Discovers all modules and delegates to <span class="ic">createSymlinkForModule()</span> for each.</p>
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> handle()</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code><span class="t-kw">public function</span> <span class="t-fn">handle</span>()
+{
+    <span class="t-ns">$modules</span> = <span class="t-ns">$this</span>-&gt;<span class="t-fn">getModuleNames</span>();   <span class="t-cm">// ['Dashboard', 'Analytics', 'Settings']</span>
+
+    <span class="t-kw">if</span> (<span class="t-fn">empty</span>(<span class="t-ns">$modules</span>)) {
+        <span class="t-ns">$this</span>-&gt;<span class="t-fn">warn</span>(<span class="t-str">'No modules found in the Modules directory'</span>);
+        <span class="t-kw">return</span> <span class="t-num">0</span>;
+    }
+
+    <span class="t-kw">foreach</span> (<span class="t-ns">$modules</span> <span class="t-kw">as</span> <span class="t-ns">$module</span>) {
+        <span class="t-ns">$this</span>-&gt;<span class="t-fn">createSymlinkForModule</span>(<span class="t-ns">$module</span>);
+    }
+
+    <span class="t-ns">$this</span>-&gt;<span class="t-fn">info</span>(<span class="t-str">'✓ Module symlinks created successfully!'</span>);
+    <span class="t-kw">return</span> <span class="t-num">0</span>;
+}</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="cmd-get">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Scans the <span class="ic">Modules/</span> directory and returns an array of module names, filtering out <span class="ic">.</span> and <span class="ic">..</span>.</p>
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> getModuleNames()</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code><span class="t-kw">protected function</span> <span class="t-fn">getModuleNames</span>()
+{
+    <span class="t-ns">$modulesDirectory</span> = <span class="t-fn">base_path</span>(<span class="t-str">'Modules'</span>);
+
+    <span class="t-kw">if</span> (!<span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$modulesDirectory</span>)) {
+        <span class="t-kw">return</span> [];   <span class="t-cm">// gracefully handle missing Modules/ dir</span>
+    }
+
+    <span class="t-kw">return</span> <span class="t-fn">array_filter</span>(
+        <span class="t-fn">scandir</span>(<span class="t-ns">$modulesDirectory</span>),
+        <span class="t-kw">function</span> (<span class="t-ns">$item</span>) <span class="t-kw">use</span> (<span class="t-ns">$modulesDirectory</span>) {
+            <span class="t-kw">return</span> <span class="t-fn">is_dir</span>(<span class="t-ns">$modulesDirectory</span>.<span class="t-str">'/'</span>.<span class="t-ns">$item</span>)
+                &amp;&amp; <span class="t-ns">$item</span> !== <span class="t-str">'.'</span>
+                &amp;&amp; <span class="t-ns">$item</span> !== <span class="t-str">'..'</span>;
+        }
+    );
+    <span class="t-cm">// Returns: ['Analytics', 'Dashboard', 'Settings']</span>
+}</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="cmd-create">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Resolves source and destination paths. Note: <span class="ic">Str::snake('UserProfile')</span> → <span class="ic">user_profile</span> for URL-friendly names.</p>
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> createSymlinkForModule()</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code><span class="t-kw">protected function</span> <span class="t-fn">createSymlinkForModule</span>(<span class="t-ns">$module</span>)
+{
+    <span class="t-cm">// e.g. /var/www/app/Modules/Dashboard/Assets</span>
+    <span class="t-ns">$sourcePath</span> = <span class="t-fn">base_path</span>(<span class="t-str">"Modules/<span class="t-ns">$module</span>/Assets"</span>);
+
+    <span class="t-cm">// e.g. /var/www/app/public/modules/dashboard</span>
+    <span class="t-ns">$destinationPath</span> = <span class="t-fn">public_path</span>(
+        <span class="t-str">"modules/"</span> . <span class="t-cl">Str</span>::<span class="t-fn">snake</span>(<span class="t-ns">$module</span>)
+    );
+
+    <span class="t-kw">if</span> (!<span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$sourcePath</span>)) {
+        <span class="t-ns">$this</span>-&gt;<span class="t-fn">error</span>(<span class="t-str">"Source folder does not exist: <span class="t-ns">$sourcePath</span>"</span>);
+        <span class="t-kw">return</span>;
+    }
+
+    <span class="t-kw">if</span> (!<span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$destinationPath</span>)) {
+        <span class="t-cl">File</span>::<span class="t-fn">makeDirectory</span>(<span class="t-ns">$destinationPath</span>, <span class="t-num">0755</span>, <span class="t-kw">true</span>);
+    }
+
+    <span class="t-ns">$this</span>-&gt;<span class="t-fn">createSymlinksForAssets</span>(<span class="t-ns">$sourcePath</span>, <span class="t-ns">$destinationPath</span>);
+}</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="cmd-assets">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Creates one symlink per subdirectory in <span class="ic">Assets/</span>. Safely removes stale symlinks before recreating.</p>
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> createSymlinksForAssets()</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code><span class="t-kw">protected function</span> <span class="t-fn">createSymlinksForAssets</span>(<span class="t-ns">$sourcePath</span>, <span class="t-ns">$destinationPath</span>)
+{
+    <span class="t-kw">foreach</span> (<span class="t-cl">File</span>::<span class="t-fn">directories</span>(<span class="t-ns">$sourcePath</span>) <span class="t-kw">as</span> <span class="t-ns">$directory</span>) {
+        <span class="t-ns">$dirName</span>     = <span class="t-fn">basename</span>(<span class="t-ns">$directory</span>);   <span class="t-cm">// 'js', 'css', 'images'</span>
+        <span class="t-ns">$symlinkPath</span> = <span class="t-ns">$destinationPath</span>.<span class="t-str">'/'</span>.<span class="t-ns">$dirName</span>;
+
+        <span class="t-kw">if</span> (<span class="t-fn">file_exists</span>(<span class="t-ns">$symlinkPath</span>)) {
+            <span class="t-kw">if</span> (<span class="t-fn">is_link</span>(<span class="t-ns">$symlinkPath</span>)) {
+                <span class="t-fn">unlink</span>(<span class="t-ns">$symlinkPath</span>);   <span class="t-cm">// remove stale symlink safely</span>
+            } <span class="t-kw">else</span> {
+                <span class="t-ns">$this</span>-&gt;<span class="t-fn">error</span>(<span class="t-str">"Conflict: <span class="t-ns">$symlinkPath</span> is a real directory"</span>);
+                <span class="t-kw">continue</span>;
+            }
+        }
+
+        <span class="t-cl">File</span>::<span class="t-fn">link</span>(<span class="t-ns">$directory</span>, <span class="t-ns">$symlinkPath</span>);
+        <span class="t-ns">$this</span>-&gt;<span class="t-fn">info</span>(<span class="t-str">"Symlink created: <span class="t-ns">$symlinkPath</span>"</span>);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASSET HELPER -->
+        <section class="section" id="helper">
+            <div class="section-header">
+                <h2><span class="section-number">6</span>Asset Helper Class</h2>
+                <p>An optional helper providing a clean API for referencing module assets in views.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                <div class="code-wrapper">
+                    <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> ModuleAssetHelper.php</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                    <pre><code><span class="t-kw">class</span> <span class="t-cl">ModuleAssetHelper</span>
+{
+    <span class="t-kw">public static function</span> <span class="t-fn">js</span>(<span class="t-ns">$module</span>, <span class="t-ns">$file</span>)
+    {
+        <span class="t-kw">return</span> <span class="t-fn">asset</span>(<span class="t-str">"modules/{$module}/js/{$file}"</span>);
+    }
+
+    <span class="t-kw">public static function</span> <span class="t-fn">css</span>(<span class="t-ns">$module</span>, <span class="t-ns">$file</span>)
+    {
+        <span class="t-kw">return</span> <span class="t-fn">asset</span>(<span class="t-str">"modules/{$module}/css/{$file}"</span>);
+    }
+
+    <span class="t-kw">public static function</span> <span class="t-fn">getJsAssets</span>(<span class="t-ns">$module</span>)
+    {
+        <span class="t-ns">$path</span> = <span class="t-fn">public_path</span>(<span class="t-str">"modules/{$module}/js"</span>);
+        <span class="t-kw">return</span> <span class="t-cl">File</span>::<span class="t-fn">exists</span>(<span class="t-ns">$path</span>)
+            ? <span class="t-fn">array_map</span>(
+                <span class="t-kw">fn</span>(<span class="t-ns">$f</span>) =&gt; <span class="t-fn">asset</span>(<span class="t-str">"modules/{$module}/js/"</span>.<span class="t-fn">basename</span>(<span class="t-ns">$f</span>)),
+                <span class="t-cl">File</span>::<span class="t-fn">files</span>(<span class="t-ns">$path</span>)
+              )
+            : [];
+    }
+}</code></pre>
+                </div>
+                <div class="code-wrapper">
+                    <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Usage Examples</div></div>
+                    <pre><code><span class="t-cm">// Single JS file URL</span>
+<span class="t-cl">ModuleAssetHelper</span>::<span class="t-fn">js</span>(<span class="t-str">'dashboard'</span>, <span class="t-str">'dashboard.js'</span>);
+<span class="t-cm">// → /modules/dashboard/js/dashboard.js</span>
+
+<span class="t-cm">// Single CSS file URL</span>
+<span class="t-cl">ModuleAssetHelper</span>::<span class="t-fn">css</span>(<span class="t-str">'analytics'</span>, <span class="t-str">'analytics.css'</span>);
+<span class="t-cm">// → /modules/analytics/css/analytics.css</span>
+
+<span class="t-cm">// All JS files for a module</span>
+<span class="t-cl">ModuleAssetHelper</span>::<span class="t-fn">getJsAssets</span>(<span class="t-str">'dashboard'</span>);
+<span class="t-cm">// → ['/modules/dashboard/js/dashboard.js']</span>
+
+<span class="t-cm">// Or use Laravel's asset() directly:</span>
+<span class="t-fn">asset</span>(<span class="t-str">'modules/dashboard/js/dashboard.js'</span>);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- USING IN VIEWS -->
+        <section class="section" id="views">
+            <div class="section-header">
+                <h2><span class="section-number">7</span>Using Assets in Blade Views</h2>
+                <p>Reference module assets in Blade templates using the helper class or the built-in <span class="ic">asset()</span> function.</p>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> resources/views/modules/dashboard.blade.php</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <pre><code>&lt;head&gt;
+    &lt;<span class="t-kw">!-- Method 1: Asset Helper class --</span>&gt;
+    &lt;<span class="t-kw">link</span> rel=<span class="t-str">"stylesheet"</span> href=<span class="t-str">"{{ \App\Helpers\ModuleAssetHelper::css('dashboard', 'dashboard.css') }}"</span>&gt;
+
+    &lt;<span class="t-kw">!-- Method 2: Laravel asset() helper --</span>&gt;
+    &lt;<span class="t-kw">link</span> rel=<span class="t-str">"stylesheet"</span> href=<span class="t-str">"{{ asset('modules/dashboard/css/dashboard.css') }}"</span>&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;<span class="t-kw">!-- Method 1: Asset Helper class --</span>&gt;
+    &lt;<span class="t-kw">script</span> src=<span class="t-str">"{{ \App\Helpers\ModuleAssetHelper::js('dashboard', 'dashboard.js') }}"</span>&gt;&lt;/<span class="t-kw">script</span>&gt;
+
+    &lt;<span class="t-kw">!-- Method 2: Laravel asset() helper --</span>&gt;
+    &lt;<span class="t-kw">script</span> src=<span class="t-str">"{{ asset('modules/dashboard/js/dashboard.js') }}"</span>&gt;&lt;/<span class="t-kw">script</span>&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- DEMO MODULES -->
+        <section class="section" id="demo-modules">
+            <div class="section-header">
+                <h2><span class="section-number">8</span>Demo Modules</h2>
+                <p>This project ships with three fully working demo modules, each with its own JS, CSS, and dedicated page.</p>
+            </div>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="mi">📊</div>
+                    <h3>Dashboard</h3>
+                    <p>Fetches live stats from the API and renders them with animated counters.</p>
+                    <div class="module-files">
+                        <div class="module-file"><span class="ext">JS</span> dashboard.js</div>
+                        <div class="module-file"><span class="ext">CSS</span> dashboard.css</div>
+                    </div>
+                    <a href="{{ route('modules.dashboard') }}" class="btn btn-outline" style="margin-top:12px;font-size:12px;padding:5px 12px">View Demo →</a>
+                </div>
+                <div class="module-card">
+                    <div class="mi">📈</div>
+                    <h3>Analytics</h3>
+                    <p>Event tracking system with real-time event logging and display.</p>
+                    <div class="module-files">
+                        <div class="module-file"><span class="ext">JS</span> analytics.js</div>
+                        <div class="module-file"><span class="ext">CSS</span> analytics.css</div>
+                    </div>
+                    <a href="{{ route('modules.analytics') }}" class="btn btn-outline" style="margin-top:12px;font-size:12px;padding:5px 12px">View Demo →</a>
+                </div>
+                <div class="module-card">
+                    <div class="mi">⚙️</div>
+                    <h3>Settings</h3>
+                    <p>Dynamic settings form that loads from and saves to the API.</p>
+                    <div class="module-files">
+                        <div class="module-file"><span class="ext">JS</span> settings.js</div>
+                        <div class="module-file"><span class="ext">CSS</span> settings.css</div>
+                    </div>
+                    <a href="{{ route('modules.settings') }}" class="btn btn-outline" style="margin-top:12px;font-size:12px;padding:5px 12px">View Demo →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPARISON -->
+        <section class="section" id="comparison">
+            <div class="section-header">
+                <h2><span class="section-number">9</span>Approach Comparison</h2>
+                <p>How this solution compares to other common approaches for managing assets in modular Laravel applications.</p>
+            </div>
+            <div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Approach</th>
+                            <th>Module Isolation</th>
+                            <th>No Build Step</th>
+                            <th>Auto-update on Edit</th>
+                            <th>Deploy Complexity</th>
+                            <th>Dependencies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="row-hl">
+                            <td><strong style="color:var(--accent2)">🔗 modules:symlink</strong> <span style="background:rgba(240,83,64,.15);color:var(--accent2);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;">This</span></td>
+                            <td class="good">✓ Full</td><td class="good">✓ Yes</td><td class="good">✓ Instant</td><td class="good">1 command</td><td class="good">None</td>
+                        </tr>
+                        <tr>
+                            <td>Store assets in <code>public/</code></td>
+                            <td class="bad">✗ None</td><td class="good">✓ Yes</td><td class="good">✓ Yes</td><td class="good">None</td><td class="good">None</td>
+                        </tr>
+                        <tr>
+                            <td>Copy assets on deploy</td>
+                            <td class="ok">~ Partial</td><td class="good">✓ Yes</td><td class="bad">✗ Manual</td><td class="bad">Script needed</td><td class="good">None</td>
+                        </tr>
+                        <tr>
+                            <td>Vite per-module config</td>
+                            <td class="good">✓ Full</td><td class="bad">✗ Build required</td><td class="bad">✗ Rebuild needed</td><td class="bad">Complex</td><td class="bad">Node.js + Vite</td>
+                        </tr>
+                        <tr>
+                            <td>nwidart/laravel-modules</td>
+                            <td class="good">✓ Full</td><td class="ok">~ Partial</td><td class="ok">~ Depends</td><td class="ok">Medium</td><td class="bad">Heavy package</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TESTS -->
+        <section class="section" id="tests">
+            <div class="section-header">
+                <h2><span class="section-number">10</span>Test Suite</h2>
+                <p>13 PHPUnit feature tests covering all scenarios. All tests pass.</p>
+            </div>
+            <div class="terminal" style="margin-bottom:20px">
+                <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>php artisan test</span></div>
+                <div class="terminal-body">
+                    <div><span class="tp">$</span> <span class="tc2">php artisan test tests/Feature/CreateModuleSymlinksTest.php</span></div>
+                    <div>&nbsp;</div>
+                    <div class="tok">   PASS  Tests\Feature\CreateModuleSymlinksTest</div>
+                    <div class="tok">  ✓ command creates symlinks for modules                  0.13s</div>
+                    <div class="tok">  ✓ symlinks point to correct directories                 0.01s</div>
+                    <div class="tok">  ✓ command handles missing assets directory              0.01s</div>
+                    <div class="tok">  ✓ command removes existing symlinks                    0.01s</div>
+                    <div class="tok">  ✓ asset files are accessible through symlinks          0.01s</div>
+                    <div class="tok">  ✓ module asset helper returns correct paths            0.01s</div>
+                    <div class="tok">  ✓ module asset helper retrieves all assets             0.01s</div>
+                    <div class="tok">  ✓ command creates public modules directory             0.01s</div>
+                    <div class="tok">  ✓ all modules are processed                            0.01s</div>
+                    <div class="tok">  ✓ command provides informative output                  0.01s</div>
+                    <div class="tok">  ✓ module controller returns correct assets             0.03s</div>
+                    <div class="tok">  ✓ module demo page loads                               0.02s</div>
+                    <div class="tok">  ✓ individual module pages load                         0.02s</div>
+                    <div>&nbsp;</div>
+                    <div class="tok">  Tests:    13 passed (55 assertions)</div>
+                    <div class="tok">  Duration: 0.35s</div>
+                </div>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Run the tests</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <pre><code><span class="t-cm"># Run all tests</span>
+$ php artisan test
+
+<span class="t-cm"># Run only module symlink tests</span>
+$ php artisan test tests/Feature/CreateModuleSymlinksTest.php</code></pre>
+            </div>
+        </section>
+
+        <!-- DEPLOYMENT -->
+        <section class="section" id="deployment">
+            <div class="section-header">
+                <h2><span class="section-number">11</span>Deployment</h2>
+                <p>Add the symlink command to your deployment pipeline. Symlinks are regenerated on every deploy.</p>
+            </div>
+            <div class="demo-area">
+                <div class="demo-tabs">
+                    <div class="demo-tab active" onclick="switchTab(this,'dep-git')">Git Setup</div>
+                    <div class="demo-tab" onclick="switchTab(this,'dep-forge')">Laravel Forge</div>
+                    <div class="demo-tab" onclick="switchTab(this,'dep-github')">GitHub Actions</div>
+                    <div class="demo-tab" onclick="switchTab(this,'dep-envoyer')">Envoyer</div>
+                </div>
+                <div class="demo-panel active" id="dep-git">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Add <span class="ic">/public/modules</span> to <span class="ic">.gitignore</span> — symlinks should not be committed.</p>
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> .gitignore</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>/node_modules
+/public/build
+/public/storage
+<span style="color:var(--green)">/public/modules</span>   <span class="t-cm"># ← Add this line</span>
+/vendor
+.env</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="dep-forge">
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Forge Deployment Script</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>cd /home/forge/your-app.com
+git pull origin main
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan config:cache
+<span style="color:var(--green)">php artisan modules:symlink</span>   <span class="t-cm"># ← Add this</span>
+php artisan queue:restart</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="dep-github">
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> .github/workflows/deploy.yml</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>- name: Install dependencies
+  run: composer install --no-dev --optimize-autoloader
+
+<span style="color:var(--green)">- name: Create module symlinks
+  run: php artisan modules:symlink</span>
+
+- name: Cache config
+  run: php artisan config:cache</code></pre>
+                    </div>
+                </div>
+                <div class="demo-panel" id="dep-envoyer">
+                    <div class="code-wrapper">
+                        <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Envoyer Hook</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                        <pre><code>cd @{{ release }}
+<span style="color:var(--green)">php artisan modules:symlink</span></code></pre>
+                    </div>
+                    <div class="alert tip" style="margin-top:12px">
+                        <span class="alert-icon">💡</span>
+                        <div>Set the hook to run <strong>After</strong> "Install Composer Dependencies" and <strong>Before</strong> "Activate Release".</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+            <div class="section-header">
+                <h2><span class="section-number">12</span>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What happens if I add a new JS file to a module's Assets/js/ directory?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Because the symlink points to the entire <span class="ic">js/</span> <strong>directory</strong> (not individual files), the new file is immediately accessible. No command re-run is needed.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What happens if I add a new subdirectory (e.g., Assets/images/)?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Re-run <span class="ic">php artisan modules:symlink</span> to create a symlink for the new subdirectory. Existing symlinks are safely removed and recreated.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Why does the module name get converted to snake_case?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Module names follow <span class="ic">PascalCase</span> (e.g., <span class="ic">UserProfile</span>). The <span class="ic">Str::snake()</span> conversion produces URL-friendly names (e.g., <span class="ic">user_profile</span>), accessible at <span class="ic">/modules/user_profile/js/...</span>.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Does this work on Windows?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Yes. On Windows, run the terminal as Administrator or enable Developer Mode. Laravel's <span class="ic">File::link()</span> handles Windows junction points automatically.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Can I use this with Vite or Laravel Mix?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Yes. The symlink approach is completely independent of build tools. Use Vite for modules requiring transpilation and the symlink approach for plain JS/CSS — they coexist without conflict.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What happens when I delete a module?<span class="faq-icon">+</span></div>
+                <div class="faq-a">The symlinks in <span class="ic">public/modules/</span> become broken. Re-running the command won't recreate them since the source no longer exists. Manually delete the broken symlinks from <span class="ic">public/modules/</span>.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Does this work on shared hosting?<span class="faq-icon">+</span></div>
+                <div class="faq-a">Shared hosting often restricts symlink creation. In that case, adapt the command to use <span class="ic">File::copyDirectory()</span> instead of <span class="ic">File::link()</span>. The trade-off is you must re-run it after every asset change.</div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-link');
+    const observer  = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                const a = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                if (a) a.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    // Copy code
+    function copyCode(btn) {
+        const text = btn.closest('.code-wrapper').querySelector('pre').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✓ Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+        });
+    }
+
+    // Tab switcher
+    function switchTab(tab, panelId) {
+        const area = tab.closest('.demo-area');
+        area.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+        area.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(panelId).classList.add('active');
+    }
+
+    // FAQ accordion
+    function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+
+    // Mobile sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    hamburger.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('show'); });
+    overlay.addEventListener('click',   () => { sidebar.classList.remove('open'); overlay.classList.remove('show'); });
+    sidebar.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+        sidebar.classList.remove('open'); overlay.classList.remove('show');
+    }));
+</script>
+</body>
 </html>
