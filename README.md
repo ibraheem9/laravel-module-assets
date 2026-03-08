@@ -152,6 +152,30 @@ asset('modules/dashboard/js/dashboard.js');
 
 ---
 
+## 🔄 Cache Busting (fileVersion)
+
+Browsers often cache JS and CSS files, meaning users might not see your latest changes after a deployment. This package includes a built-in `fileVersion()` helper that appends the file's last modification timestamp to the URL, forcing the browser to fetch the fresh file.
+
+### Option 1: Using the Global Helper
+If you registered `app/Helpers/helpers.php` in your `composer.json`, you can use the global functions:
+
+```php
+// Generates: http://localhost/modules/dashboard/js/dashboard.js?v=1741234567
+<script src="{{ moduleAsset('dashboard', 'js', 'dashboard.js') }}"></script>
+
+// Or append the version string manually:
+<script src="{{ asset('modules/dashboard/js/dashboard.js') . fileVersion('modules/dashboard/js/dashboard.js') }}"></script>
+```
+
+### Option 2: Using the Class Helper
+```php
+// Generates: http://localhost/modules/dashboard/js/dashboard.js?v=1741234567
+<script src="{{ \App\Helpers\ModuleAssetHelper::jsVersioned('dashboard', 'dashboard.js') }}"></script>
+<link rel="stylesheet" href="{{ \App\Helpers\ModuleAssetHelper::cssVersioned('dashboard', 'dashboard.css') }}">
+```
+
+---
+
 ## 📊 Approach Comparison
 
 How this solution compares to other common approaches for managing assets in modular Laravel applications.

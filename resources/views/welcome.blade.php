@@ -303,8 +303,9 @@
             <a href="#structure"    class="nav-link"><span class="nav-icon">&#x1F4C1;</span> Module Structure</a>
             <a href="#command"      class="nav-link"><span class="nav-icon">&#x1F5A5;&#xFE0F;</span> The Command</a>
             <div class="nav-section-title">Usage</div>
-            <a href="#helper"       class="nav-link"><span class="nav-icon">&#x1F6E0;&#xFE0F;</span> Asset Helper</a>
-            <a href="#views"        class="nav-link"><span class="nav-icon">&#x1F3A8;</span> Using in Views</a>
+            <a href="#helper" class="nav-link"><span class="nav-icon">🛠️</span> Asset Helper</a>
+            <a href="#cache" class="nav-link"><span class="nav-icon">🔄</span> Cache Busting</a>
+            <a href="#views" class="nav-link"><span class="nav-icon">👁️</span> Using in Views</a>
             <a href="#demo-modules" class="nav-link"><span class="nav-icon">&#x1F9E9;</span> Demo Modules</a>
             <div class="nav-section-title">Reference</div>
             <a href="#comparison"   class="nav-link"><span class="nav-icon">&#x1F4CA;</span> Comparison</a>
@@ -772,10 +773,35 @@
             </div>
         </section>
 
+        <!-- CACHE BUSTING -->
+        <section class="section" id="cache">
+            <div class="section-header">
+                <h2><span class="section-number">7</span>Cache Busting (fileVersion)</h2>
+                <p>Browsers often cache JS and CSS files. This package includes a built-in <span class="ic">fileVersion()</span> helper that appends the file's last modification timestamp to the URL, forcing the browser to fetch the fresh file after a deployment.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                <div class="code-wrapper">
+                    <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Global Helper (helpers.php)</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                    <pre><code><span class="t-cm">&lt;!-- Generates: /modules/dashboard/js/dashboard.js?v=1741234567 --&gt;</span>
+&lt;<span class="t-kw">script</span> <span class="t-fn">src</span>=<span class="t-str">"{{ moduleAsset('dashboard', 'js', 'dashboard.js') }}"</span>&gt;&lt;/<span class="t-kw">script</span>&gt;
+
+<span class="t-cm">&lt;!-- Or append the version string manually: --&gt;</span>
+&lt;<span class="t-kw">script</span> <span class="t-fn">src</span>=<span class="t-str">"{{ asset('modules/dashboard/js/dashboard.js') . fileVersion('modules/dashboard/js/dashboard.js') }}"</span>&gt;&lt;/<span class="t-kw">script</span>&gt;</code></pre>
+                </div>
+                <div class="code-wrapper">
+                    <div class="code-header"><div class="file-name"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span> Class Helper</div><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                    <pre><code><span class="t-cm">&lt;!-- Generates: /modules/dashboard/js/dashboard.js?v=1741234567 --&gt;</span>
+&lt;<span class="t-kw">script</span> <span class="t-fn">src</span>=<span class="t-str">"{{ \App\Helpers\ModuleAssetHelper::jsVersioned('dashboard', 'dashboard.js') }}"</span>&gt;&lt;/<span class="t-kw">script</span>&gt;
+
+&lt;<span class="t-kw">link</span> <span class="t-fn">rel</span>=<span class="t-str">"stylesheet"</span> <span class="t-fn">href</span>=<span class="t-str">"{{ \App\Helpers\ModuleAssetHelper::cssVersioned('dashboard', 'dashboard.css') }}"</span>&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
         <!-- USING IN VIEWS -->
         <section class="section" id="views">
             <div class="section-header">
-                <h2><span class="section-number">7</span>Using Assets in Blade Views</h2>
+                <h2><span class="section-number">8</span>Using in Blade Views</h2>
                 <p>Reference module assets in Blade templates using the helper class or the built-in <span class="ic">asset()</span> function.</p>
             </div>
             <div class="code-wrapper">
@@ -800,7 +826,7 @@
         <!-- DEMO MODULES -->
         <section class="section" id="demo-modules">
             <div class="section-header">
-                <h2><span class="section-number">8</span>Demo Modules</h2>
+                <h2><span class="section-number">9</span>Demo Modules</h2>
                 <p>This project ships with three fully working demo modules, each with its own JS, CSS, and dedicated page.</p>
             </div>
             <div class="module-grid">
@@ -837,7 +863,7 @@
         <!-- COMPARISON -->
         <section class="section" id="comparison">
             <div class="section-header">
-                <h2><span class="section-number">9</span>Approach Comparison</h2>
+                <h2><span class="section-number">10</span>Approach Comparison</h2>
                 <p>How this solution compares to other common approaches for managing assets in modular Laravel applications.</p>
             </div>
             <div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)">
@@ -881,8 +907,8 @@
         <!-- TESTS -->
         <section class="section" id="tests">
             <div class="section-header">
-                <h2><span class="section-number">10</span>Test Suite</h2>
-                <p>13 PHPUnit feature tests covering all scenarios. All tests pass.</p>
+                <h2><span class="section-number">11</span>Testing</h2>
+                <p>15 PHPUnit feature tests covering all scenarios. All tests pass.</p>
             </div>
             <div class="terminal" style="margin-bottom:20px">
                 <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span>php artisan test</span></div>
@@ -921,7 +947,7 @@ $ php artisan test tests/Feature/CreateModuleSymlinksTest.php</code></pre>
         <!-- DEPLOYMENT -->
         <section class="section" id="deployment">
             <div class="section-header">
-                <h2><span class="section-number">11</span>Deployment</h2>
+                <h2><span class="section-number">12</span>Deployment</h2>
                 <p>Add the symlink command to your deployment pipeline. Symlinks are regenerated on every deploy.</p>
             </div>
             <div class="demo-area">
@@ -985,7 +1011,7 @@ php artisan queue:restart</code></pre>
         <!-- FAQ -->
         <section class="section" id="faq">
             <div class="section-header">
-                <h2><span class="section-number">12</span>Frequently Asked Questions</h2>
+                <h2><span class="section-number">13</span>Frequently Asked Questions</h2>
             </div>
 
             <div class="faq-item">
