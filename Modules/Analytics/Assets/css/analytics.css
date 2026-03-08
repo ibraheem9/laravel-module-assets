@@ -1,0 +1,67 @@
+/* Analytics Module Styles */
+
+.analytics-container {
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.chart {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 4px;
+}
+
+.chart p {
+    color: #666;
+    font-size: 14px;
+}
+
+#analytics-charts {
+    margin-top: 20px;
+}
+
+.analytics-filters {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.analytics-filters select,
+.analytics-filters button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.analytics-filters button {
+    background: #0066cc;
+    color: white;
+    cursor: pointer;
+    border-color: #0066cc;
+}
+
+.analytics-filters button:hover {
+    background: #0052a3;
+}

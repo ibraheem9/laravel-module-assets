@@ -1,0 +1,7 @@
+{
+    "name": "Analytics",
+    "slug": "analytics",
+    "description": "Analytics module for tracking and reporting",
+    "version": "1.0.0",
+    "author": "Laravel Modules Demo"
+}

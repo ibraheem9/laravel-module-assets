@@ -1,0 +1,7 @@
+{
+    "name": "Settings",
+    "slug": "settings",
+    "description": "Settings module for application preferences",
+    "version": "1.0.0",
+    "author": "Laravel Modules Demo"
+}

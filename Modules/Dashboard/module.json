@@ -1,0 +1,7 @@
+{
+    "name": "Dashboard",
+    "slug": "dashboard",
+    "description": "Dashboard module with statistics and overview",
+    "version": "1.0.0",
+    "author": "Laravel Modules Demo"
+}
